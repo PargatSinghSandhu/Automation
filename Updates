@@ -1,12 +1,18 @@
 
-PS C:\Users\NursingIT\Downloads> .\ApplyDellBIOSConfig.ps1
-.\ApplyDellBIOSConfig.ps1 : File C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1 cannot be loaded. The file
-C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1 is not digitally signed. You cannot run this script on the
-current system. For more information about running scripts and setting execution policy, see about_Execution_Policies
-at https:/go.microsoft.com/fwlink/?LinkID=135170.
-At line:1 char:1
-+ .\ApplyDellBIOSConfig.ps1
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess
+ BIOS setting applied successfully. Please reboot the changes to take effect.
+Enter the password for NursingIT: ****************
+
+[INFO] Updating password for NursingIT...
+[INFO] Setting password to never expire...
+ERROR:
+Description = Invalid query
+Get-LocalGroupMember : A positional parameter cannot be found that accepts argument 'Administrators'.
+At C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1:77 char:10
++     if(-not(Get-LocalGroupMember - Group $group | Where-Object {$_.Na ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-LocalGroupMember], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.GetLocalGroupMemberCommand
+
+
+Script completed! Please reboot if BIOS settings were changed.
 PS C:\Users\NursingIT\Downloads>
