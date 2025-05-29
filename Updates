@@ -1,4 +1,3 @@
-
  BIOS setting applied successfully. Please reboot the changes to take effect.
 Enter the password for NursingIT: ****************
 
@@ -6,12 +5,20 @@ Enter the password for NursingIT: ****************
 [INFO] Setting password to never expire...
 ERROR:
 Description = Invalid query
-Get-LocalGroupMember : A positional parameter cannot be found that accepts argument 'Administrators'.
+Get-LocalGroupMember : An unspecified error occurred: error code = 1789
 At C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1:77 char:10
-+     if(-not(Get-LocalGroupMember - Group $group | Where-Object {$_.Na ...
-+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidArgument: (:) [Get-LocalGroupMember], ParameterBindingException
-    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.GetLocalGroupMemberCommand
++     if(-not(Get-LocalGroupMember -Group $group | Where-Object {$_.Nam ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Administrators:String) [Get-LocalGroupMember], Win32InternalException
+    + FullyQualifiedErrorId : Win32Internal,Microsoft.PowerShell.Commands.GetLocalGroupMemberCommand
+
+[INFO] Adding NursingIT to Administrator group...
+Add-LocalGroupMember : NURS-A1-6ZZK5Y2\NursingIT is already a member of group Administrators.
+At C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1:80 char:3
++         Add-LocalGroupMember -Group $group -Member $adminUser
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceExists: (Administrators:String) [Add-LocalGroupMember], MemberExistsException
+    + FullyQualifiedErrorId : MemberExists,Microsoft.PowerShell.Commands.AddLocalGroupMemberCommand
 
 
 Script completed! Please reboot if BIOS settings were changed.
