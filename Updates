@@ -87,8 +87,8 @@ if(Get-LocalUser -Name $adminUser -ErrorAction SilentlyContinue)
 	$group = "Administrators"
 	try
 	{	
-		$groupMembers = Get-LocalGroupMember -Group $group
-		$isMember = -ErrorAction Stop | Where-Object {$_.Name -like "*$adminUser"}
+		$groupMembers = Get-LocalGroupMember -Group $group -ErrorAction Stop
+		$isMember = $groupMembers | Where-Object {$_.Name -like "*$adminUser"}
 
 		if(-not $isMember)
 		{
