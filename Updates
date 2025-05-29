@@ -1,0 +1,12 @@
+
+PS C:\Users\NursingIT\Downloads> .\ApplyDellBIOSConfig.ps1
+.\ApplyDellBIOSConfig.ps1 : File C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1 cannot be loaded. The file
+C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1 is not digitally signed. You cannot run this script on the
+current system. For more information about running scripts and setting execution policy, see about_Execution_Policies
+at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ .\ApplyDellBIOSConfig.ps1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+PS C:\Users\NursingIT\Downloads>
