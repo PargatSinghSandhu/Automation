@@ -70,20 +70,42 @@ if(Get-LocalUser -Name $adminUser -ErrorAction SilentlyContinue)
 
 	#set password to never expire
 	Write-Host "[INFO] Setting password to never expire..."
-	WMIC UserAccount Where Name="$adminUser" Set PasswordExpires=FALSE
+	
+	
+	try
+	{
+		$user = Get-LocalUser -Name $adminUser
+		$user.PasswordNeverExpires = $true
+		$user | Set-LocalUser
+	}
+	catch
+	{
+		Write-Host "[INFO] Failed to set password to never expire: $_"
+	}
 	
 	#Add to administrator group (if not already a member) 
 	$group = "Administrators"
-	if(-not(Get-LocalGroupMember - Group $group | Where-Object {$_.Name -like "*$adminUser"}))
-	{
-		Write-Host "[INFO] Adding $adminUser to Administrator group..."
-		Add-LocalGroupMember -Group $group -Member $adminUser
+	try
+	{	
+		$groupMembers = Get-LocalGroupMember -Group $group -ErrorAction Stop
+		$isMember = $groupMembers | Where-Object {$_.Name -like "*$adminUser"}
+
+		if(-not $isMember)
+		{
+		 Write-Host "[INFO] Adding $adminUser to Administrator group..."
+		 Add-LocalGroupMember -Group $group -Member $adminUser
+	        }
+
+		else
+	       {
+		 Write-Host "[INFO] $adminUser is already in the Administrators group."
+	       }
+	}
+	catch
+	{ 
+             Write-Host "[WARNING] Could not verify or add group membership: $_"
 	}
 
-	else
-	{
-		Write-Host "[INFO] $adminUser is already in the Administrators group."
-	}
 	
 }
 else
