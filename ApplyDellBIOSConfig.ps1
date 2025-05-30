@@ -1,3 +1,7 @@
+# Import the module for windows updates
+Import-Module PSWindowsUpdate
+
+
 # By pass execution policy for this specific session only. NOTE: This is only for this session, so no security risk system wide, and -Force only supresses the confirmation prompt
 
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
@@ -25,7 +29,7 @@ if(-not (Test-Path $cctkPath))
 	   Write-Host "[Error] Command_Configure.msi not found at $installerPath. Aborting..."
 	   exit 1
 	}
-}
+} 
 
 #Step 2: Confirm cctk exists now
 
@@ -114,3 +118,29 @@ else
 }
 
 Write-Host "`nScript completed! Please reboot if BIOS settings were changed." 
+
+#Updates and Installs 
+
+$dcuPath = "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe..."
+
+#Check if it is installed 
+
+if(Test-Path $dcuPath)
+{
+	Write-Host "`n[INFO] Dell Command Update found. Running updates..."
+
+	#Run silent update (no reboot)
+	Start-Process -FilePath $dcuPath -ArgumentList "/applyUpdates -silent -reboot=disable" Wait
+	
+	Write-Host "[INFO] Dell Command Update completed."
+}
+else
+{
+	Wtite-Host "`n[ERROR] Dell Command Update CLI not found at: $dcuPath"
+	Write-Host "[ACTION] Please install Dell Command | Update manually or include in the base image."
+}
+
+
+
+#Scan and install available windows updates 
+Get-WindowsUpdate -AcceptAll -Install -AutoReboot
