@@ -13,3 +13,33 @@ At line:1 char:20
     + CategoryInfo          : InvalidArgument: (:) [Set-AssignedAccess], ParameterBindingException
     + FullyQualifiedErrorId : NamedParameterNotFound,Set-AssignedAccess
 
+
+
+
+
+# 1. Get SID for domain user
+$user = New-Object System.Security.Principal.NTAccount("ucdenver.pvt\\NursingIT")
+$userSID = $user.Translate([System.Security.Principal.SecurityIdentifier]).Value
+
+# 2. Set namespace and class for Shell Launcher v2
+$namespaceName = "root\standardcimv2\embedded"
+$className = "WESL_UserSetting"
+
+# 3. Try to get existing Shell Launcher config for this user
+$instance = Get-WmiObject -Namespace $namespaceName -Class $className -Filter "UserSID='$userSID'"
+
+if ($instance -eq $null) {
+    # 4. Create new instance if none exists
+    $instance = ([WMIClass]"\\.\$namespaceName:$className").CreateInstance()
+    $instance.UserSID = $userSID
+}
+
+# 5. Set Chrome as the shell
+$instance.Shell = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+$instance.ShellArguments = "--kiosk https://laerdal.com/us/products/simulation-training/operate-assess-debrief/lleap/"
+$instance.Default = $true
+
+# 6. Save the configuration
+$instance.Put()
+
+
