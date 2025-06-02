@@ -41,3 +41,68 @@ $instance.Default = $true
 
 # 6. Save the configuration
 $instance.Put()
+
+
+
+
+>> $instance.Put()
+Exception calling "Translate" with "1" argument(s): "The trust relationship between this workstation and the primary
+domain failed.
+"
+At line:3 char:1
++ $userSID = $user.Translate([System.Security.Principal.SecurityIdentif ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : SystemException
+
+Get-WmiObject : Invalid class "WESL_UserSetting"
+At line:10 char:13
++ $instance = Get-WmiObject -Namespace $namespaceName -Class $className ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidType: (:) [Get-WmiObject], ManagementException
+    + FullyQualifiedErrorId : GetWMIManagementException,Microsoft.PowerShell.Commands.GetWmiObjectCommand
+
+Cannot convert value "\\.\root\standardcimv2\embedded:WESL_UserSetting" to type "System.Management.ManagementClass".
+Error: "Not found "
+At line:14 char:5
++     $instance = ([WMIClass]"\\.\${namespaceName}:${className}").Creat ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvalidCastToWMIClass
+
+The property 'UserSID' cannot be found on this object. Verify that the property exists and can be set.
+At line:15 char:5
++     $instance.UserSID = $userSID
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : PropertyNotFound
+
+The property 'Shell' cannot be found on this object. Verify that the property exists and can be set.
+At line:19 char:1
++ $instance.Shell = "C:\Program Files\Google\Chrome\Application\chrome. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : PropertyNotFound
+
+The property 'ShellArguments' cannot be found on this object. Verify that the property exists and can be set.
+At line:20 char:1
++ $instance.ShellArguments = "--kiosk https://laerdal.com/us/products/s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : PropertyNotFound
+
+The property 'Default' cannot be found on this object. Verify that the property exists and can be set.
+At line:21 char:1
++ $instance.Default = $true
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : PropertyNotFound
+
+You cannot call a method on a null-valued expression.
+At line:24 char:1
++ $instance.Put()
++ ~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+
+PS C:\WINDOWS\system32>
