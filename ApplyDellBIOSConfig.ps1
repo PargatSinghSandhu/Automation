@@ -1,7 +1,3 @@
-# Import the module for windows updates
-Import-Module PSWindowsUpdate
-
-
 # By pass execution policy for this specific session only. NOTE: This is only for this session, so no security risk system wide, and -Force only supresses the confirmation prompt
 
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
@@ -121,7 +117,7 @@ Write-Host "`nScript completed! Please reboot if BIOS settings were changed."
 
 #Updates and Installs 
 
-$dcuPath = "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe..."
+$dcuPath = "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe"
 
 #Check if it is installed 
 
@@ -130,17 +126,22 @@ if(Test-Path $dcuPath)
 	Write-Host "`n[INFO] Dell Command Update found. Running updates..."
 
 	#Run silent update (no reboot)
-	Start-Process -FilePath $dcuPath -ArgumentList "/applyUpdates -silent -reboot=disable" Wait
+	Start-Process -FilePath $dcuPath -ArgumentList "/applyUpdates -silent -reboot=disable" -Wait
 	
 	Write-Host "[INFO] Dell Command Update completed."
 }
 else
 {
-	Wtite-Host "`n[ERROR] Dell Command Update CLI not found at: $dcuPath"
+	Write-Host "`n[ERROR] Dell Command Update CLI not found at: $dcuPath"
 	Write-Host "[ACTION] Please install Dell Command | Update manually or include in the base image."
 }
 
+# Import the module for windows updates
 
+if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
+    Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
+}
+Import-Module PSWindowsUpdate
 
 #Scan and install available windows updates 
 Get-WindowsUpdate -AcceptAll -Install -AutoReboot
