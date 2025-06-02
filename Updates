@@ -1,9 +1,51 @@
- BIOS setting applied successfully. Please reboot the changes to take effect.
-Enter the password for NursingIT: ****************
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
 
-[INFO] Updating password for NursingIT...
-[INFO] Setting password to never expire...
-[INFO] Failed to set password to never expire: The property 'PasswordNeverExpires' cannot be found on this object. Verify that the property exists and can be set.
-[WARNING] Could not verify or add group membership: An unspecified error occurred: error code = 1789
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
 
-Script completed! Please reboot if BIOS settings were changed.
+PS C:\WINDOWS\system32> .\ApplyDellBIOSConfig.ps1
+.\ApplyDellBIOSConfig.ps1 : The term '.\ApplyDellBIOSConfig.ps1' is not recognized as the name of a cmdlet, function,
+script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is
+correct and try again.
+At line:1 char:1
++ .\ApplyDellBIOSConfig.ps1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.\ApplyDellBIOSConfig.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\WINDOWS\system32> cd "C:\Users\NursingIT\Downloads"
+PS C:\Users\NursingIT\Downloads> .\ApplyDellBIOSConfig.ps1
+.\ApplyDellBIOSConfig.ps1 : File C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1 cannot be loaded. The file
+C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1 is not digitally signed. You cannot run this script on the
+current system. For more information about running scripts and setting execution policy, see about_Execution_Policies
+at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ .\ApplyDellBIOSConfig.ps1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess                                                                        PS C:\Users\NursingIT\Downloads> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force                      PS C:\Users\NursingIT\Downloads> .\ApplyDellBIOSConfig.ps1                                                                                                                                                                                      [INFO] Desktop detected - applying desktop BIOS settings...                                                                                                                                                                                      BIOS setting applied successfully. Please reboot the changes to take effect.
+Enter the password for NursingIT: ****************                                                                                                                                                                                              [INFO] Updating password for NursingIT...                                                                               [INFO] Setting password to never expire...                                                                              [INFO] Failed to set password to never expire: The property 'PasswordNeverExpires' cannot be found on this object. Verify that the property exists and can be set.                                                                              [WARNING] Could not verify or add group membership: An unspecified error occurred: error code = 1789                                                                                                                                            Script completed! Please reboot if BIOS settings were changed.                                                                                                                                                                                  [ERROR] Dell Command Update CLI not found at: C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe                     [ACTION] Please install Dell Command | Update manually or include in the base image.                                                                                                                                                            NuGet provider is required to continue
+PowerShellGet requires NuGet provider version '2.8.5.201' or newer to interact with NuGet-based repositories. The NuGet
+ provider must be available in 'C:\Program Files\PackageManagement\ProviderAssemblies' or
+'C:\Users\NursingIT\AppData\Local\PackageManagement\ProviderAssemblies'. You can also install the NuGet provider by
+running 'Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force'. Do you want PowerShellGet to install
+and import the NuGet provider now?
+[Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
+
+X ComputerName Result     KB          Size Title
+- ------------ ------     --          ---- -----
+1 NURS-A1-6... Accepted                8MB Remote help 5.1.1998.0
+1 NURS-A1-6... Accepted   KB2267602    1GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602...
+1 NURS-A1-6... Accepted               24KB Dell Inc. - Monitor - 1/7/2016 12:00:00 AM - 1.0.0.0
+1 NURS-A1-6... Accepted               27MB Dell, Inc. - Firmware - 0.1.38.0
+2 NURS-A1-6... Downloaded              8MB Remote help 5.1.1998.0
+2 NURS-A1-6... Downloaded KB2267602    1GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602...
+2 NURS-A1-6... Downloaded             24KB Dell Inc. - Monitor - 1/7/2016 12:00:00 AM - 1.0.0.0
+2 NURS-A1-6... Downloaded             27MB Dell, Inc. - Firmware - 0.1.38.0
+3 NURS-A1-6... Installed               8MB Remote help 5.1.1998.0
+3 NURS-A1-6... Installed  KB2267602    1GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602...
+3 NURS-A1-6... Installed              24KB Dell Inc. - Monitor - 1/7/2016 12:00:00 AM - 1.0.0.0
+3 NURS-A1-6... Failed                 27MB Dell, Inc. - Firmware - 0.1.38.0
+
+
+PS C:\Users\NursingIT\Downloads>
