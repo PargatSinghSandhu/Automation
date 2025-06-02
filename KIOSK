@@ -5,3 +5,11 @@ Set-AssignedAccess -AppPath "C:\Program Files\Google\Chrome\Application\chrome.e
   -UserName "memeot" `
   -ShellLauncher `
   -AppArguments "--kiosk https://your-app-url"
+
+Set-AssignedAccess : A parameter cannot be found that matches parameter name 'AppPath'.
+At line:1 char:20
++ Set-AssignedAccess -AppPath "C:\Program Files\Google\Chrome\Applicati ...
++                    ~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-AssignedAccess], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Set-AssignedAccess
+
