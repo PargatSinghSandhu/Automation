@@ -1,6 +1,3 @@
-# By pass execution policy for this specific session only
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-
 # Set the expected installer on USB
 $usbDrive = Get-WmiObject Win32_LogicalDisk | Where-Object {$_.DriveType -eq 2 } 
 $installerPath = "$($usbDrive.DeviceID)\Command_Configure.msi"  
@@ -8,7 +5,7 @@ $dcuInstaller = "$($usbDrive.DeviceID)\Dell-Command-Update-Application.exe"
 
 # Set the final paths
 $cctkPath = "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe"
-$dcuPath = "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe"
+$dcuPath = "C:\Users\NursingIT\Downloads\Dell-Command-Update-Windows-Universal-Application_P4DJW_WIN64_5.5.0_A00.EXE"
 
 # Step 1: Install Dell Command | Configure if not present 
 if (-not (Test-Path $cctkPath)) {
