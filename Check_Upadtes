@@ -1,14 +1,13 @@
-
-PS C:\WINDOWS\system32> "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
-At line:1 char:52
-+ "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
-+                                                    ~
-You must provide a value expression following the '/' operator.
-At line:1 char:52
-+ "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
-+                                                    ~~~~
-Unexpected token 'scan' in expression or statement.
-    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : ExpectedValueExpression
-
+PS C:\WINDOWS\system32> & "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
+Checking for updates...
+Checking for application component updates...
+Scanning system devices...
+Determining available updates...
+Check for updates completed
+Number of applicable updates for the current system configuration: 2
+5M8N1: Intel Thunderbolt Controller Firmware Update Utility - Firmware -- Urgent -- CS
+7PPNN: Dell Latitude 7300 and 7400 System BIOS - BIOS -- Urgent -- BI
+Warning: One or more available updates will be skipped, since it requires the power adapter to be connected.
+Execution completed.
+The program exited with return code: 0
 PS C:\WINDOWS\system32>
