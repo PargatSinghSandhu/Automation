@@ -1,0 +1,14 @@
+
+PS C:\WINDOWS\system32> "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
+At line:1 char:52
++ "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
++                                                    ~
+You must provide a value expression following the '/' operator.
+At line:1 char:52
++ "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
++                                                    ~~~~
+Unexpected token 'scan' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ExpectedValueExpression
+
+PS C:\WINDOWS\system32>
