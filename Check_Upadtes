@@ -269,3 +269,16 @@ if (-not $updates) {
     $updates | Format-Table -Property Title, KB, Size
 }
 
+PS C:\Users\NursingIT\Desktop> .\check.ps1
+At C:\Users\NursingIT\Desktop\Check.ps1:10 char:70
++ ...    Write-Host "`n[INFO] The following Windows updates are available:"
++                                                                         ~
+The string is missing the terminator: ".
+At C:\Users\NursingIT\Desktop\Check.ps1:6 char:2
++  {
++  ~
+Missing closing '}' in statement block or type definition.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString
+
+PS C:\Users\NursingIT\Desktop>
