@@ -1,16 +1,16 @@
-# Bypass execution policy for the current session
+# Bypass execution policy for this session only
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
 
-# Detect USB path dynamically
+# Dynamically detect USB path
 $usbDrive = Get-WmiObject Win32_LogicalDisk | Where-Object {$_.DriveType -eq 2}
 $installerPath = "$($usbDrive.DeviceID)\Command_Configure.msi"
 $dcuInstaller = "$($usbDrive.DeviceID)\Dell-Command-Update-Application.exe"
 
-# Set target paths
+# Define final install paths
 $cctkPath = "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe"
 $dcuCLIPath = "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe"
 
-# Step 1: Install Dell Command | Configure if not already installed
+# ========== STEP 1: Install Dell Command | Configure ==========
 if (-not (Test-Path $cctkPath)) {
     Write-Host "`n[INFO] Dell Command | Configure not found. Installing..."
     if (Test-Path $installerPath) {
@@ -22,28 +22,28 @@ if (-not (Test-Path $cctkPath)) {
     }
 }
 
-# Step 2: Confirm installation
+# Confirm installation
 if (-not (Test-Path $cctkPath)) {
     Write-Host "[ERROR] cctk.exe not found after installation. Aborting..."
     exit 1
 }
 
-# Step 3: Detect device type (laptop or desktop)
+# ========== STEP 2: Detect Device Type and Apply BIOS ==========
 $laptopTypes = @(8,9,10,14)
 $chassisType = (Get-WmiObject -Class Win32_SystemEnclosure).ChassisTypes
 
 if ($laptopTypes -contains $chassisType) {
-    Write-Host "`n[INFO] Laptop detected – no BIOS changes needed."
+    Write-Host "`n[INFO] Laptop detected – skipping BIOS changes."
 } else {
     Write-Host "`n[INFO] Desktop detected – applying BIOS settings..."
     Start-Process -FilePath $cctkPath -ArgumentList "--AcPower=On" -Wait
     Start-Process -FilePath $cctkPath -ArgumentList "--AutoOn=Everyday" -Wait
     Start-Process -FilePath $cctkPath -ArgumentList "--AutoOnHr=0" -Wait
     Start-Process -FilePath $cctkPath -ArgumentList "--AutoOnMn=0" -Wait
-    Write-Host "`n[INFO] BIOS settings applied. Reboot required for full effect."
+    Write-Host "`n[INFO] BIOS settings applied. Reboot required to take effect."
 }
 
-# Step 4: Install Dell Command | Update if not present
+# ========== STEP 3: Install Dell Command | Update ==========
 if (-not (Test-Path $dcuCLIPath)) {
     Write-Host "`n[INFO] Dell Command | Update not found. Installing..."
     if (Test-Path $dcuInstaller) {
@@ -54,7 +54,7 @@ if (-not (Test-Path $dcuCLIPath)) {
     }
 }
 
-# Step 5: Run Dell Updates using CLI
+# ========== STEP 4: Run Dell Firmware and Driver Updates ==========
 if (Test-Path $dcuCLIPath) {
     Write-Host "`n[INFO] Running Dell Command Update..."
     Start-Process -FilePath $dcuCLIPath -ArgumentList "/applyUpdates -silent -reboot=disable" -Wait
@@ -63,13 +63,13 @@ if (Test-Path $dcuCLIPath) {
     Write-Host "[ERROR] dcu-cli.exe not found. Please check installation."
 }
 
-# Step 6: Install and Import PSWindowsUpdate
+# ========== STEP 5: Install PSWindowsUpdate ==========
 if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
     Install-Module -Name PSWindowsUpdate -Force -Scope CurrentUser
 }
 Import-Module PSWindowsUpdate
 
-# Step 7: Run Windows Updates
+# ========== STEP 6: Run Windows Updates ==========
 Write-Host "`n[INFO] Checking for Windows Updates..."
 Get-WindowsUpdate -AcceptAll -Install -AutoReboot
