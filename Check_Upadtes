@@ -280,3 +280,10 @@ if (-not $updates) {
     $updates | Format-Table -Property Title, KB, Size
 }
 
+
+# Relaunch the script as admin if not already running as admin
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Host "Restarting as Administrator..."
+    Start-Process powershell -Verb runAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
+    exit
+}
