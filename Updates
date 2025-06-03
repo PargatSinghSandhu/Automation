@@ -1,10 +1,16 @@
+
 PS C:\Users\NursingIT\Downloads> .\ApplyDellBIOSConfig.ps1
-
-[INFO] Running Dell Command Update...
-[INFO] Dell updates completed.
-
-[INFO] Checking for Windows Updates...
-PS C:\Users\NursingIT\Downloads>
-
-
-& "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe" /report
+At C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1:36 char:1
++ } else {
++ ~
+Unexpected token '}' in expression or statement.
+At C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1:73 char:53
++ Write-Host "`n[INFO] Checking for Windows Updates..."
++                                                     ~
+The string is missing the terminator: ".
+At C:\Users\NursingIT\Downloads\ApplyDellBIOSConfig.ps1:36 char:8
++ } else {
++        ~
+Missing closing '}' in statement block or type definition.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : UnexpectedToken
