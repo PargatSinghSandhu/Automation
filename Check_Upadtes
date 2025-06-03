@@ -260,3 +260,12 @@ The command completed successfully.
 WindowsUpdate.log written to C:\Users\NursingIT\Desktop\WindowsUpdate.log
 
 PS C:\WINDOWS\system32>
+
+$updates = Get-WindowsUpdate -MicrosoftUpdate -AcceptAll
+if (-not $updates) {
+    Write-Host "`n[INFO] No Windows updates available — system is up to date."
+} else {
+    Write-Host "`n[INFO] The following Windows updates are available:"
+    $updates | Format-Table -Property Title, KB, Size
+}
+
