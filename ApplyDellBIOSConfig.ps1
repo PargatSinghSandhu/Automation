@@ -1,5 +1,21 @@
-# Bypass execution policy for this session only
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+# ====== PASSWORD VERIFICATION BLOCK ======
+# Load stored encrypted password (assumes file is next to the script)
+$storedPassword = Import-Clixml -Path "$PSScriptRoot\secure_pwd.xml"
+
+# Prompt user
+$enteredPassword = Read-Host "Enter BIOS Setup Password to Continue" -AsSecureString
+
+# Convert and compare
+$storedPlain = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
+    [Runtime.InteropServices.Marshal]::SecureStringToBSTR($storedPassword))
+
+$enteredPlain = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
+    [Runtime.InteropServices.Marshal]::SecureStringToBSTR($enteredPassword))
+
+if ($storedPlain -ne $enteredPlain) {
+    Write-Host "`n[ERROR] Incorrect password. Access denied." -ForegroundColor Red
+    exit 1
+}
 
 # Dynamically detect USB path
 $usbDrive = Get-WmiObject Win32_LogicalDisk | Where-Object {$_.DriveType -eq 2}
