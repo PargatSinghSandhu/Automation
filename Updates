@@ -5,3 +5,6 @@ PS C:\Users\NursingIT\Downloads> .\ApplyDellBIOSConfig.ps1
 
 [INFO] Checking for Windows Updates...
 PS C:\Users\NursingIT\Downloads>
+
+
+& "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe" /report
