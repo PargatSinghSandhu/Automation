@@ -291,3 +291,9 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 Write-Host "`n[INFO] All updates processed. Restarting the system now..." -ForegroundColor Green
 Restart-Computer -Force
+
+Write-Host "`n[INFO] Checking for Windows Updates..."
+Get-WindowsUpdate -AcceptAll -Install -AutoReboot
+
+Write-Host "`n[INFO] All updates processed. Restarting the system now..." -ForegroundColor Green
+Restart-Computer -Force
