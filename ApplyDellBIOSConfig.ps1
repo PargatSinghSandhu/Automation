@@ -1,3 +1,10 @@
+# Relaunch the script as admin if not already running as admin
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Host "Restarting as Administrator..."
+    Start-Process powershell -Verb runAs -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
+    exit
+}
+
 # ====== PASSWORD VERIFICATION BLOCK ======
 # Load stored encrypted password (assumes file is next to the script)
 $storedPassword = Import-Clixml -Path "$PSScriptRoot\secure_pwd.xml"
@@ -17,14 +24,15 @@ if ($storedPlain -ne $enteredPlain) {
     exit 1
 }
 
+
 # Dynamically detect USB path
 $usbDrive = Get-WmiObject Win32_LogicalDisk | Where-Object {$_.DriveType -eq 2}
-$installerPath = "$($usbDrive.DeviceID)\Command_Configure.msi"
+$installerPath = "$($usbDrive.DeviceID)\dellcctk\Command_Configure.msi"
 $dcuInstaller = "$($usbDrive.DeviceID)\Dell-Command-Update-Application.exe"
 
 # Define final install paths
 $cctkPath = "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe"
-$dcuCLIPath = "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe"
+$dcuCLIPath = "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe"
 
 # ========== STEP 1: Install Dell Command | Configure ==========
 if (-not (Test-Path $cctkPath)) {
@@ -45,13 +53,18 @@ if (-not (Test-Path $cctkPath)) {
 }
 
 # ========== STEP 2: Detect Device Type and Apply BIOS ==========
-$laptopTypes = @(8,9,10,14)
-$chassisType = (Get-WmiObject -Class Win32_SystemEnclosure).ChassisTypes
 
-if ($laptopTypes -contains $chassisType) {
-    Write-Host "`n[INFO] Laptop detected – skipping BIOS changes."
-} else {
-    Write-Host "`n[INFO] Desktop detected – applying BIOS settings..."
+$chassisType = (Get-WmiObject -Class Win32_SystemEnclosure).ChassisTypes
+$laptopTypes = @(8,9,10,14)
+ 
+
+
+if ($chassisType | Where-Object { $laptopTypes -contains $_ }) 
+{
+    Write-Host "`n[INFO] Laptop detected, skipping BIOS changes."
+} 
+else {
+    Write-Host "`n[INFO] Desktop detected, applying BIOS settings..."
     Start-Process -FilePath $cctkPath -ArgumentList "--AcPower=On" -Wait
     Start-Process -FilePath $cctkPath -ArgumentList "--AutoOn=Everyday" -Wait
     Start-Process -FilePath $cctkPath -ArgumentList "--AutoOnHr=0" -Wait
@@ -72,6 +85,7 @@ if (-not (Test-Path $dcuCLIPath)) {
 
 # ========== STEP 4: Run Dell Firmware and Driver Updates ==========
 if (Test-Path $dcuCLIPath) {
+    
     Write-Host "`n[INFO] Running Dell Command Update..."
     Start-Process -FilePath $dcuCLIPath -ArgumentList "/applyUpdates -silent -reboot=disable" -Wait
     Write-Host "[INFO] Dell updates completed."
@@ -89,3 +103,5 @@ Import-Module PSWindowsUpdate
 # ========== STEP 6: Run Windows Updates ==========
 Write-Host "`n[INFO] Checking for Windows Updates..."
 Get-WindowsUpdate -AcceptAll -Install -AutoReboot
+
+Write-Host "`n[INFO] Windows updates processed."
