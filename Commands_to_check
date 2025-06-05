@@ -1,0 +1,7 @@
+& "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe" --report
+
+
+& "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe" --AcPower
+& "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe" --AutoOn
+& "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe" --AutoOnHr
+& "C:\Program Files (x86)\Dell\Command Configure\X86_64\cctk.exe" --AutoOnMn
